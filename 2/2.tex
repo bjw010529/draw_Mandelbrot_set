@@ -1,0 +1,55 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx,amsmath,geometry}
+\geometry{a4paper,scale = 0.7}
+
+\title{作业二: }
+
+
+\author{毕嘉文 \\ 数学与应用数学\ 3190105194}
+
+\begin{document}
+
+\maketitle
+
+
+\section{问题描述}
+本文中我使用了P48中的脚本代码\verb|test|，我们首先定义函数\verb|yes_or_no|：
+\begin{verbatim}#!/bin/bash 
+
+yes_or_no() { 
+	echo "Is your name $* ?"
+	while true 
+	do 
+		echo -n "Enter yes or no: "
+		read x 
+		case "$x" in 
+			y | yes ) return 0;; 
+			n | no )  return 1;; 
+			* )       echo "Answer yes or no"
+		esac 
+	done 
+}\end{verbatim}
+然后是主程序
+\begin{verbatim}echo "Original parameters are $*"
+if yes_or_no "$1"
+then 
+	echo "Hi $1, nice name"
+else 
+	echo "Never mind"
+fi 
+
+exit 0\end{verbatim}
+我们运行指令\verb|./test wuhu| 后输出为\begin{verbatim}
+Original parameters are wuhu
+Is your name wuhu ?
+Enter yes or no:\end{verbatim} 再输入\verb|yes| 后可看到完整输出为\begin{verbatim}Original parameters are wuhu
+Is your name wuhu ?
+Enter yes or no: yes
+Hi wuhu, nice name
+\end{verbatim}
+\section{代码解释}
+我们定义了一个函数\verb|yes_or_no|，使用了\verb|case|语句，并使用\verb|while true|和在\verb|yes|和\verb|no|的情况下\verb|return|的方式
+，对\verb|yes|和\verb|no|以外的异常情况做了异常处理。
+
+\begin{verbatim}\end{verbatim}
+\end{document}

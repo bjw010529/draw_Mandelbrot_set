@@ -1,0 +1,50 @@
+\documentclass{ctexart}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\title{作业一: Taylor公式的叙述与证明}
+
+
+\author{毕嘉文 \\ 数学与应用数学 3190105194}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+泰勒公式，是一个用函数在某点的信息描述其附近取值的公式。
+如果函数满足一定的条件，泰勒公式可以用函数在某一点的各阶导数值做系数构建一个多项式来近似表达这个函数。
+泰勒公式得名于英国数学家布鲁克·泰勒，他在1712年的一封信里首次叙述了这个公式。
+泰勒公式是为了研究复杂函数性质时经常使用的近似方法之一，也是函数微分学的一项重要应用内容。
+\section{问题描述}
+设$f(x)$在$x_0$处有$n$阶导数，则存在$x_0$的一个邻域，对于该邻域中的任一点$x$，成立\begin{align}
+f(x) = f(x_0) + f'(x_0)(x-x_0) + \dfrac{f''(x_0)}{2!}(x-x_0)^2 + \cdots + \dfrac{f^{(n)}(x-x_0)^n}{n!} + r_n(x)
+\label{eq::taylor}
+\end{align}其中余项$r_n(x)$满足\begin{align}
+r_n(x) = o((x-x_0)^n)
+\label{eq::peano}
+\end{align}称为Peano余项。
+\section{证明}
+考虑 $\displaystyle r_n = f(x) - \sum_{k=0}^n \dfrac1{k!}f^{(k)}(x_0)(x-x_0)^k $，
+要证明等式(\ref{eq::peano}) 。显然\begin{align}
+r_n(x_0) = r'_n(x_0) = r''_m(x_0) = \cdots = r_n^{(n-1)}(x_0) = 0
+\label{pr1}
+\end{align}反复应用L'Hospital法则，可得\begin{align}
+&\ \lim_{x\rightarrow x_0} \dfrac{r_n(x)}{(x-x_0)^n} = \lim_{x\rightarrow x_0} \dfrac{r'_n(x)}{n(x-x_0)^{n-1}} 
+	= \lim_{x\rightarrow x_0}\dfrac{r''_n(x)}{n(n-1)(x-x_0)^{n-2}} = \cdots \notag\\
+&= \lim_{x\rightarrow x_0} \dfrac{r_n^{(n-1)}(x)}{n(n-1)\cdot \cdots \cdot 2\cdot (x-x_0)} = 
+	\dfrac1{n!}\lim\left[ \dfrac{f^{(n-1)}(x) - f^{(n-1)}(x_0) - f^{(n)}(x-x_0)}{x-x_0} \right] \notag\\
+&= \dfrac1{n!}\lim_{x-x_0}\left[ \dfrac{f^{(n-1)}(x) - f^{(n-1)}(x_0)}{x-x_0} - f^{(n)}(x_0) \right] 
+	= \dfrac1{n!}[f^{(n)}(x_0) - f^{(n)}(x_0)] = 0
+\label{pr2}
+\end{align}
+因此\begin{align}
+r_n(x) = o((x-x_0)^n)
+\label{pr3}
+\end{align}
+
+
+
+\end{document}

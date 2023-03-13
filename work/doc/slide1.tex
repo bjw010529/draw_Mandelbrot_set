@@ -1,0 +1,158 @@
+\documentclass[11pt]{beamer}																										\usetheme{Madrid}
+\usepackage{subfigure}
+\usepackage{lmodern,xcolor}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{ctex}
+\usepackage{amsmath,amssymb,geometry,graphics,subfigure,tikz,url}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\graphicspath{ {../image/} }
+\usetikzlibrary{positioning, shapes.geometric}
+\setlength{\parindent}{2em}
+
+\begin{document}
+%\begin{frame}
+	\title[Julia Set 的生成和与Mandelbrot Set的联系]{Julia Set 的生成和与Mandelbrot Set的联系}
+	\author[毕嘉文 \\ 数学与应用数学\ 3190105194]{毕嘉文 \\ 数学与应用数学\ 3190105194} % 显示作者
+	\date{\today}
+\begin{frame}
+	\titlepage
+\end{frame}
+\section[Contents]{}
+
+
+\frame {
+	\frametitle{\secname}
+	\tableofcontents
+}
+\section{引言}
+\begin{frame}[fragile]
+	\frametitle{引言}
+
+	在第一次世界大战后不久，Pierre Fatou \cite{BSMF_1922__50__37_1,BSMF_1920__48__208_1} 和 Gaston Julia \cite{GastonJulia1918}
+奠定了复杂动力学的基础，从全局的角度看待迭代有理函数的理论。两人都接触到了蒙特尔的正规族（normal family）理论，
+并意识到这一理论对复解析函数研究的重要性。 Fatou 和 Julia 都独立地证明了正规域必须要么是空的，要么有一个、两个或无限多个分量。
+他们都证明了 Julia 集通常是分形结构，并且能够通过可视化来理解 Julia 集的复杂结构，并研究和解释复杂的行为。
+
+
+	在 Fatou 和 Julia 的研究工作的推动下，对复变量函数迭代领域的研究热情一直持续到 1930 年代，后来它逐渐淡出人们的视线。
+尽管在那段时间有几位重要的数学家在这个领域工作，但直到 1980 年代它才恢复了活力，
+大概是因为计算机的出现使得其他人能够直观感受 Julia 和 Fatou 理解下的艺术美感和复杂性。\cite{10.1007/978-3-319-08105-2_3}
+\end{frame}
+
+\section{相关数学理论}
+
+\subsection{Julia集}
+\begin{frame}[fragile]
+	\frametitle{Julia集}
+	Julia 集分形通常通过初始化复数 $z = x + yi$ 来生成，其中$x$ 和 $y$ 是大约 $-2$ 到 $2$ 范围内的图像像素坐标。
+然后，使用 $z = z^2 + c$ 重复更新 $z $的值， 其中 c 是一个决定 Julia 集的复参数。 
+经过多次迭代，如果 $z$ 的模小于 2，我们就认为该像素在 Julia 集中并相应对其进行着色。 
+\end{frame}
+
+\subsection{与Mandelbrot集的联系}
+\begin{frame}[fragile]
+	\frametitle{与Mandelbrot集的联系}
+	对于 Julia 集，c 是所有像素的相同复数，并且基于 c 的不同值有许多不同的 Julia 集。
+连续改变 c，我们可以从一个 Julia 集连续转换为另一个。
+对于 Mandelbrot 集，$c = x + yi$，其中 x 和 y 是图像坐标。 
+
+	Mandelbrot 集可以被认为是所有 Julia 集的映射，因为它在每个位置使用不同的 c，就好像从一个 Julia 集跨空间转换到另一个一样。
+因为两集合的迭代函数相似，所以我们可以发现对任一Mandelbrot 集中的点$c$，它都会给出一个 Julia 集，
+并且通过迭代公式也可以发现整个 Julia 集的外观通常在样式上与Mandelbrot 集相应位置的局部外形相似。\cite{https://complex-analysis.com/}
+\end{frame}
+
+\section{算法介绍}
+\subsection{生成算法}
+\begin{frame}[fragile]
+\frametitle{生成算法}
+	\begin{algorithm}[H]
+	\caption{Drawing Mandelbrot Set}
+	\label{alg1}
+	\textbf{Input:}参数c\par
+	对于图像中的每一个像素点p：\par
+	$\quad$令$z$为p对应的复数，$n=0$\par
+	$\quad $while $n \le N$:\par
+	$\qquad$ 如果$|z| > 2$，将该像素点为$get\_color(n)$，并跳出循环，移动至下一个像素点\par
+	$\qquad$ 否则$z \leftarrow z^2 + c,n \leftarrow n+1$\par
+	$\quad$如果正常结束循环，令该像素点为白色\par
+	$\quad$移动至下一个像素点
+	\end{algorithm}
+
+\end{frame}
+
+
+\subsection{算法流程图}
+\begin{frame}[fragile]
+\frametitle{流程图}
+\begin{tikzpicture}[node distance=10pt,scale=0.4, every node/.style={scale=0.4}]
+	\node[draw, rounded corners]	(start)	{$i,j=0$};
+	\node[draw, diamond, aspect=2, below = 30pt of start]	(choice_i)	{$i < height$};
+	\node[draw, rounded corners, left = 50pt of choice_i] (end) {输出image};
+	\node[draw, below right = 35pt of choice_i] (i+1) {$j=0,i = i + 1$};
+	\node[draw, diamond, below = 30pt of choice_i]	(choice_j)	{$j < width$};
+	\node[draw, below = 30pt of choice_j] (n0) {$n=0$};
+	\node[draw, below = 30pt of n0] (choice_n) {$n<N$};
+	\node[draw, left = 30pt of n0] (j+1) {$j=j+1$};
+	\node[draw, left = 50pt of choice_n] (get_white) {$image[i][j]$染白};
+	\node[draw, below = 30pt of choice_n] (choice_z) {$\vert z\vert > 2$};
+	\node[draw, right = 50pt of choice_z] (n+1) {$z = z^2 + c$ , $n = n + 1$};
+	\node[draw, left = 30pt of choice_z] (get_color) {根据$n$染色$image[i][j]$};
+
+
+
+	\draw[->] (start)  -- (choice_i);
+	\draw[->] (choice_i) -- node[above] {No} (end);
+	\draw[->] (choice_i) -- node[left]  {Yes} (choice_j);
+	\draw[->] (choice_j) -- node[above]  {No} (i+1);
+	\draw[->] (i+1) -- (choice_i);
+	\draw[->] (j+1) -- (choice_j);
+	\draw[->] (n+1) -- (choice_n);
+	\draw[->] (get_color) -- (j+1);
+	\draw[->] (get_white) -- (j+1);
+	\draw[->] (choice_j) -- node[right]  {Yes} (n0);
+	\draw[->] (n0) -- (choice_n);
+	\draw[->] (choice_z) -- node[above] {Yes} (get_color);
+	\draw[->] (choice_n) -- node[right] {Yes} (choice_z);
+	\draw[->] (choice_n) -- node[above] {No}  (get_white);
+	\draw[->] (choice_z) -- node[above] {No}  (n+1);
+
+\end{tikzpicture}
+\end{frame}
+
+\section{数值算例}
+\begin{frame}[fragile]
+	 \frametitle{数值算例}
+
+\begin{figure}[h]
+	\centering
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{colored_image_1.png}
+		\caption{$c = -0.79 + 0.15i$ }
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{colored_image_2.png}
+		\caption{$c = 0.28 + 0.085i$}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{colored_image_3.png}
+		\caption{$c = -0.12 - 0.77i$}
+	\end{minipage}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\linewidth]{colored_image_4.png}
+		\caption{$c = -1.476 + 0i$ }
+	\end{minipage}
+\end{figure}
+\end{frame}
+
+\bibliographystyle{unsrt}
+\bibliography{./ref/ref}
+\end{document}

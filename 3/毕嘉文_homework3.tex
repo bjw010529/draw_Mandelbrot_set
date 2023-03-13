@@ -1,0 +1,49 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx,amsmath,geometry}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\geometry{a4paper,scale = 0.7}
+
+\title{作业三: 关于我的Linux环境}
+
+
+\author{毕嘉文 \\ 数学与应用数学\ 3190105194}
+
+\begin{document}
+\maketitle
+
+\section{Linux介绍}
+我使用的Linux环境是WSL2 Ubuntu，使用的Ubuntu版本为\verb|Ubuntu 18.04.6 LTS|，使用\verb|lsb_release -a|指令
+可以获取版本信息\begin{verbatim}
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 18.04.6 LTS
+Release:        18.04
+Codename:       bionic
+\end{verbatim}
+
+\section{个性化改动}
+从大一开始的时候，我就开始使用WSL + Ubuntu，当时主要是使用Windows下的VS Code作为文本编辑器，使用VS Code下的Terminal来调试和运行，主要任务是
+使用latex写些文章，参考了如下文章\href{https://zhuanlan.zhihu.com/p/65931654}{Ubuntu 使用 Latex，使用VS Code 中文}。
+经过一段时间的适应之后，我把C++的工作环境从Dev C++迁移到WSL Ubuntu + VS Code上。然后在一段时间的使用之后，我感觉VS Code插件用来编译和运行很麻烦，
+也经常会出bug，就在朋友推荐下使用了Sublime Text3作为文本编辑器，直接用Ubuntu Terminal来编译和运行。\par
+我又针对不同的应用场景安装了各种软件包，比如为了数学实践大作业安装了doxygen，cmake，为了实习工作安装了线性代数计算库armadillo\cite{armadillo}，
+为了学习AI、训练AI模型安装了jupyter notebook 和框架pytorch，为了远程编辑安装了vim。
+另外，我在Windows上安装了自带的OpenSSH，在iPad上安装了Terminus，现在可以用iPad通过ssh访问电脑终端，当然也就可以远程使用WSL。
+
+\section{未来工作}
+\subsection{未来半年使用场景}
+未来半年我在这套系统上的主要任务大概就是写论文吧，工作量不算大，要用到的软件也不算多。
+\subsection{未来需求}
+这套工作环境应该不会符合未来工作需求，因为我在配置的时候主要是为了方便，所以选用的工具尽可能轻量级，
+包括使用轻量级的文本编辑器vim和Sublime Text，使用Linux的替代品WSL，可能不会满足未来工作需求。
+未来如果要处理科研/学术任务，可能会考虑emacs + VirtualBox Ubuntu的环境；如果要处理商业化的工作，可能会使用WSL + CLion/VS Code的环境。
+
+
+\section{如何保证环境稳定}
+从大二开始我就将每学期保存下来的文件打包压缩存在百度云，之前也尝试过将数学实践大作业保存在github中
+（参考\href{https://github.com/bjw010529/test-work}{这里}）。未来考虑会购买云盘服务，习惯于使用git提交代码。
+
+
+\bibliographystyle{plain}
+\bibliography{毕嘉文_homework3}
+\end{document}

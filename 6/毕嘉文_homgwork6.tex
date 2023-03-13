@@ -1,0 +1,65 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx,amsmath,geometry,tikz}
+\usepackage{lmodern}
+\geometry{a4paper,scale = 0.7}
+
+\usepackage{gnuplottex}
+
+\usepackage{xcolor}
+
+\usetikzlibrary{positioning, shapes.geometric}
+\title{作业六: 一元二次方程在实数域上的求解}
+\author{毕嘉文 \\ 数学与应用数学\ 3190105194}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{数学原理}
+对于实数域上的一元二次方程$ax^2 + bx + c = 0$，我们可以知道方程在虚数域上的解为$$
+x_{1,2} = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+$$
+因此我们只要讨论$b^2 - 4ac$ 与$0$的关系
+\section{算法流程图}
+\begin{tikzpicture}[node distance=10pt]
+	\node[draw, rounded corners]	(start)	{Start};
+	\node[draw, diamond, aspect=2, below = of start]	(choice)	{a = 0};
+	\node[draw, below = 30pt of choice]	(choice 1)	{b=0};
+	\node[draw, right = 30pt of choice 1]	(delta)	{$b^2 - 4ac$};
+	\node[draw, below = 30pt of delta] (delta2) {$x_{1,2} = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$};
+	\node[draw, right = 20pt of delta2] (delta1) {$x = -\frac{b}{2a} $};
+	\node[draw, right = 20pt of delta1] (delta3) {无解};
+	\node[draw, left = 30pt of choice 1] (out 1)	{$x = -\frac{c}{b}$};
+	\node[draw, left = 30pt of  delta2]	(choice 2)	{c=0};
+	\node[draw, left = 30pt of choice 2] (out 2)	{无解};
+	\node[draw, below = 30pt of choice 2] (out 3)	{任意解};
+	
+	\draw[->] (start)  -- (choice);
+	\draw[->] (choice) -- node[left]  {Yes} (choice 1);
+	\draw[->] (choice) -- node[above] {No}  (delta);
+	\draw[->] (choice	1) -- node[above] {No}  (out 1);
+	\draw[->] (choice	1) -- node[left]  {Yes} (choice 2);
+	\draw[->] (choice	2) -- node[above] {No}  (out 2);
+	\draw[->] (choice	2) -- node[left] {Yes}  (out 3);
+	\draw[->] (delta) -- node[left] {$>0$} (delta2);
+	\draw[->] (delta) -- node[left] {$=0$} (delta1);
+	\draw[->] (delta) -- node[above] {$<0$} (delta3);
+\end{tikzpicture}
+\section{示意图}
+以下为一元二次方程（默认$a\neq 0$）的三种情况的示意图，在这里以$y=x^2$,$y=x^2+10$,$y=x^2-10$为例。
+\begin{figure}[h]
+\centering%
+\begin{gnuplot}[terminal=epslatex,terminaloptions={color size 14cm,12cm}]
+	set key top left
+	set xlabel 'x [1]'
+	set ylabel 'y [1]'
+	plot x**2 ,x**2+10 , x**2-10 
+\end{gnuplot}
+\caption{$y=x^2$,$y=x^2+10$,$y=x^2-10$示意图}%
+\label{pic:cairolatex}%
+\end{figure}%
+
+
+\bibliographystyle{plain}
+\bibliography{毕嘉文_homework6}
+\end{document}
